@@ -12,7 +12,10 @@ import com.aman.unittestingpractiseandroid.java.mockito_fundamentals.exercise5.u
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
@@ -26,21 +29,31 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UpdateUsernameUseCaseSyncTest {
 
     private static final String USER_ID = "userId";
     private static final String USERNAME = "username";
 
     private UpdateUsernameUseCaseSync SUT;
+
+    @Mock
     private UpdateUsernameHttpEndpointSync updateUsernameHttpEndpointSyncMock;
+
+    @Mock
     private UsersCache usersCacheMock;
+
+    @Mock
     private EventBusPoster eventBusPosterMock;
 
     @Before
     public void setUp() throws Exception {
+        /*
+        Since we have annotated these variables with @Mock so we need not explicitly mock them now
+        For @MOck annotation to work we need to make the test class @RunWith(MockitoJUnitRunner.class)
         updateUsernameHttpEndpointSyncMock = mock(UpdateUsernameHttpEndpointSync.class);
         usersCacheMock = mock(UsersCache.class);
-        eventBusPosterMock = mock(EventBusPoster.class);
+        eventBusPosterMock = mock(EventBusPoster.class);*/
         SUT = new UpdateUsernameUseCaseSync(updateUsernameHttpEndpointSyncMock, usersCacheMock, eventBusPosterMock);
 
         success();
@@ -139,11 +152,18 @@ public class UpdateUsernameUseCaseSyncTest {
         UseCaseResult result = SUT.updateUsernameSync(USER_ID, USERNAME);
         assertThat(result, is(UseCaseResult.FAILURE));
     }
+    //How to Create a Test Template
+    //Right CLick and select Generate option (Alt+Insert)
+    //Choose Test Method and in right sub menu choose edit Template
+
 
     @Test
     public void updateUserNameSync_serverError_UseCaseResultFailureReturned() throws Exception {
+        //Arrange
         serverError();
+        //ACT
         UseCaseResult result = SUT.updateUsernameSync(USER_ID, USERNAME);
+        //Assert
         assertThat(result, is(UseCaseResult.FAILURE));
     }
 
