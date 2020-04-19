@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentCaptor.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FetchUserUseCaseSyncTest {
+public class FetchUserUseCaseImplementationTest {
     //region Constants----------------------------------------------------
 
     //endregion Constants-------------------------------------------------
@@ -24,10 +24,11 @@ public class FetchUserUseCaseSyncTest {
 
     //endregion Helper Fields---------------------------------------------
 
-    private FetchUserUseCaseSync SUT;
+    private FetchUserUseCaseImplementation SUT;
 
     @Before
     public void setup() {
+        SUT = new FetchUserUseCaseImplementation();
 
     }
 
